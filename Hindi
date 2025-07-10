@@ -2,3 +2,70 @@
 %cd Playwright-Updated
 !chmod +x install_brave.sh
 !./install_brave.sh
+
+
+
+import asyncio
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from playwright.async_api import async_playwright
+import nest_asyncio
+import random
+import getindianname as name
+import requests
+
+# Download your Python script from Dropbox
+!wget -O script.py "https://www.dropbox.com/scl/fi/9o3ns65bs2zdvhqbiglb0/JAVED.py?rlkey=8ddyf3ckrry7bhglyywwakbqf&dl=0"
+
+import sys
+sys.path.append('JAVED')
+
+# Import your module
+from script import start  # Make sure you have the correct import statement here
+
+async def main():
+    global running
+    number = 10 # Number of threads
+    meetingcode = "93057678235"
+    passcode = "VitnixXAi"
+
+    sec = 90
+    wait_time = sec * 80
+
+    # Fetching Zoom base URL from GitHub repository
+    github_url = "https://raw.githubusercontent.com/AmitKehrwal/LINK/main/LINK.txt"
+    response = requests.get(github_url)
+    if response.status_code == 200:
+        zoom_base_url = response.text.strip()
+    else:
+        print("Failed to fetch Zoom base URL from GitHub repository.")
+        return
+
+    with ThreadPoolExecutor(max_workers=number) as executor:
+        loop = asyncio.get_running_loop()
+        tasks = []
+        for i in range(number):
+            try:
+                # Generate a random Indian name using getindianname
+                user = name.randname() + f"_Thread_{i + 1}"
+            except IndexError:
+                break
+            task = loop.create_task(start(user, wait_time, meetingcode, passcode, zoom_base_url))
+            tasks.append(task)
+
+            # Add a delay between launching browsers
+            await asyncio.sleep(1)
+
+    try:
+        await asyncio.gather(*tasks, return_exceptions=True)
+    except KeyboardInterrupt:
+        running = False
+        # Wait for tasks to complete
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
+
