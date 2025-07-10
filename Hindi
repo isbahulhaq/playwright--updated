@@ -1,71 +1,160 @@
-!git clone https://github.com/AmitKehrwal/Playwright-Updated.git
-%cd Playwright-Updated
-!chmod +x install_brave.sh
-!./install_brave.sh
-
-
-
-import asyncio
-import threading
-from concurrent.futures import ThreadPoolExecutor
-from playwright.async_api import async_playwright
-import nest_asyncio
-import random
-import getindianname as name
-import requests
-
-# Download your Python script from Dropbox
-!wget -O script.py "https://www.dropbox.com/scl/fi/9o3ns65bs2zdvhqbiglb0/JAVED.py?rlkey=8ddyf3ckrry7bhglyywwakbqf&dl=0"
-
-import sys
-sys.path.append('JAVED')
-
-# Import your module
-from script import start  # Make sure you have the correct import statement here
-
-async def main():
-    global running
-    number = 10 # Number of threads
-    meetingcode = "93057678235"
-    passcode = "VitnixXAi"
-
-    sec = 90
-    wait_time = sec * 80
-
-    # Fetching Zoom base URL from GitHub repository
-    github_url = "https://raw.githubusercontent.com/AmitKehrwal/LINK/main/LINK.txt"
-    response = requests.get(github_url)
-    if response.status_code == 200:
-        zoom_base_url = response.text.strip()
-    else:
-        print("Failed to fetch Zoom base URL from GitHub repository.")
-        return
-
-    with ThreadPoolExecutor(max_workers=number) as executor:
-        loop = asyncio.get_running_loop()
-        tasks = []
-        for i in range(number):
-            try:
-                # Generate a random Indian name using getindianname
-                user = name.randname() + f"_Thread_{i + 1}"
-            except IndexError:
-                break
-            task = loop.create_task(start(user, wait_time, meetingcode, passcode, zoom_base_url))
-            tasks.append(task)
-
-            # Add a delay between launching browsers
-            await asyncio.sleep(1)
-
-    try:
-        await asyncio.gather(*tasks, return_exceptions=True)
-    except KeyboardInterrupt:
-        running = False
-        # Wait for tasks to complete
-        await asyncio.gather(*tasks, return_exceptions=True)
-
-if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        pass
-
+{
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "kFOoK6411SEv"
+      },
+      "outputs": [],
+      "source": [
+        "!git clone https://github.com/AmitKehrwal/Playwright-Updated.git\n",
+        "%cd Playwright-Updated\n",
+        "!chmod +x install_brave.sh\n",
+        "!./install_brave.sh"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "background_save": true,
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "sAXOGa5rF6hV",
+        "outputId": "b2779598-379a-4bea-d502-7a8766dad5cb"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--2024-03-07 13:44:43--  https://www.dropbox.com/scl/fi/9o3ns65bs2zdvhqbiglb0/JAVED.py?rlkey=8ddyf3ckrry7bhglyywwakbqf&dl=0\n",
+            "Resolving www.dropbox.com (www.dropbox.com)... 162.125.5.18, 2620:100:601d:18::a27d:512\n",
+            "Connecting to www.dropbox.com (www.dropbox.com)|162.125.5.18|:443... connected.\n",
+            "HTTP request sent, awaiting response... 302 Found\n",
+            "Location: https://ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com/cd/0/inline/COr3DB44cUXgQb4JA6Ds3UvFEWcSw2YB9U6StacCvRW1S3_Xkmx0yfxt2QeAMAKc59a9tLOy35TRabWCKPbubTjD-SSBd64QVpikUd1BjzhmevPpE-gqyUzg60GIEKXL4d1D7OG-xs79CiRPuQHehauD/file# [following]\n",
+            "--2024-03-07 13:44:44--  https://ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com/cd/0/inline/COr3DB44cUXgQb4JA6Ds3UvFEWcSw2YB9U6StacCvRW1S3_Xkmx0yfxt2QeAMAKc59a9tLOy35TRabWCKPbubTjD-SSBd64QVpikUd1BjzhmevPpE-gqyUzg60GIEKXL4d1D7OG-xs79CiRPuQHehauD/file\n",
+            "Resolving ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com (ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com)... 162.125.5.15, 2620:100:601d:15::a27d:50f\n",
+            "Connecting to ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com (ucaa119d77ef35e4ea61743ab415.dl.dropboxusercontent.com)|162.125.5.15|:443... connected.\n",
+            "HTTP request sent, awaiting response... 200 OK\n",
+            "Length: 2494 (2.4K) [text/plain]\n",
+            "Saving to: ‘script.py’\n",
+            "\n",
+            "script.py           100%[===================>]   2.44K  --.-KB/s    in 0s      \n",
+            "\n",
+            "2024-03-07 13:44:44 (1.09 GB/s) - ‘script.py’ saved [2494/2494]\n",
+            "\n",
+            "Avi Tiwari_Thread_1 joined.\n",
+            "Goddu Tiwari_Thread_2 joined.\n",
+            "M Ramesh Devi_Thread_3 joined.\n",
+            "Aboil Rajput_Thread_4 joined.\n",
+            "Rudra Srivastav_Thread_5 joined.\n",
+            "Suresh K Yadav_Thread_6 joined.\n",
+            "Aayan Tiwari_Thread_7 joined.\n",
+            "Horilal Yadav_Thread_8 joined.\n",
+            "Rembo Kumari_Thread_9 joined.\n",
+            "Ashish Kumar Tiwari_Thread_10 joined.\n",
+            "Avi Tiwari mic aayenge.\n",
+            "Avi Tiwari sleep for 7200 seconds ...\n",
+            "Goddu Tiwari mic aayenge.\n",
+            "Goddu Tiwari sleep for 7200 seconds ...\n",
+            "M Ramesh Devi mic aayenge.\n",
+            "M Ramesh Devi sleep for 7200 seconds ...\n",
+            "Rudra Srivastav mic aayenge.\n",
+            "Rudra Srivastav sleep for 7200 seconds ...\n",
+            "Aboil Rajput mic aayenge.\n",
+            "Aboil Rajput sleep for 7200 seconds ...\n",
+            "Suresh K Yadav mic aayenge.\n",
+            "Suresh K Yadav sleep for 7200 seconds ...\n",
+            "Rembo Kumari mic aayenge.\n",
+            "Rembo Kumari sleep for 7200 seconds ...\n",
+            "Horilal Yadav mic aayenge.\n",
+            "Horilal Yadav sleep for 7200 seconds ...\n",
+            "Ashish Kumar Tiwari mic aayenge.\n",
+            "Ashish Kumar Tiwari sleep for 7200 seconds ...\n",
+            "Aayan Tiwari mic aayenge.\n",
+            "Aayan Tiwari sleep for 7200 seconds ...\n"
+          ]
+        }
+      ],
+      "source": [
+        "import asyncio\n",
+        "import threading\n",
+        "from concurrent.futures import ThreadPoolExecutor\n",
+        "from playwright.async_api import async_playwright\n",
+        "import nest_asyncio\n",
+        "import random\n",
+        "import getindianname as name\n",
+        "import requests\n",
+        "\n",
+        "# Download your Python script from Dropbox\n",
+        "!wget -O script.py \"https://www.dropbox.com/scl/fi/9o3ns65bs2zdvhqbiglb0/JAVED.py?rlkey=8ddyf3ckrry7bhglyywwakbqf&dl=0\"\n",
+        "\n",
+        "import sys\n",
+        "sys.path.append('JAVED')\n",
+        "\n",
+        "# Import your module\n",
+        "from script import start  # Make sure you have the correct import statement here\n",
+        "\n",
+        "async def main():\n",
+        "    global running\n",
+        "    number = 10 # Number of threads\n",
+        "    meetingcode = \"93057678235\"\n",
+        "    passcode = \"VitnixXAi\"\n",
+        "\n",
+        "    sec = 90\n",
+        "    wait_time = sec * 80\n",
+        "\n",
+        "    # Fetching Zoom base URL from GitHub repository\n",
+        "    github_url = \"https://raw.githubusercontent.com/AmitKehrwal/LINK/main/LINK.txt\"\n",
+        "    response = requests.get(github_url)\n",
+        "    if response.status_code == 200:\n",
+        "        zoom_base_url = response.text.strip()\n",
+        "    else:\n",
+        "        print(\"Failed to fetch Zoom base URL from GitHub repository.\")\n",
+        "        return\n",
+        "\n",
+        "    with ThreadPoolExecutor(max_workers=number) as executor:\n",
+        "        loop = asyncio.get_running_loop()\n",
+        "        tasks = []\n",
+        "        for i in range(number):\n",
+        "            try:\n",
+        "                # Generate a random Indian name using getindianname\n",
+        "                user = name.randname() + f\"_Thread_{i + 1}\"\n",
+        "            except IndexError:\n",
+        "                break\n",
+        "            task = loop.create_task(start(user, wait_time, meetingcode, passcode, zoom_base_url))\n",
+        "            tasks.append(task)\n",
+        "\n",
+        "            # Add a delay between launching browsers\n",
+        "            await asyncio.sleep(1)\n",
+        "\n",
+        "    try:\n",
+        "        await asyncio.gather(*tasks, return_exceptions=True)\n",
+        "    except KeyboardInterrupt:\n",
+        "        running = False\n",
+        "        # Wait for tasks to complete\n",
+        "        await asyncio.gather(*tasks, return_exceptions=True)\n",
+        "\n",
+        "if __name__ == '__main__':\n",
+        "    try:\n",
+        "        asyncio.run(main())\n",
+        "    except KeyboardInterrupt:\n",
+        "        pass\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
