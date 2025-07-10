@@ -1,0 +1,3 @@
+playwright
+faker
+nest_asyncio
